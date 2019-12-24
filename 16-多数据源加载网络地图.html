@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../v6.1.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height:600px;
+            width: 100%;
+        }
+    </style>
+    <script src="../v6.1.1/build/ol.js"></script>
+    <title>Simple Map exachange</title>
+</head>
+<body>
+<h2>My Map</h2>
+<div id="map" class="map">
+</div>
+<script type="text/javascript">
+    //初始化一个点要素
+    let pointFeature = new ol.Feature({
+        geometry: new ol.geom.LineString([[11590147, 4322577], [13594369, 3872784]]),//空间信息
+        name:'点要素' // 属性信息
+    });
+    // 初始化一个线要素
+    let lineFeature = new ol.Feature({
+        // 空间信息
+        geometry: new ol.geom.LineString([[11590147, 4322577], [13594369, 3872784]]),
+        name: '线要素'                  // 属性信息
+    });
+    // 初始化一个多边形要素
+    let polygonFeature = new ol.Feature({
+        // 空间信息
+        geometry: new ol.geom.Polygon([[[11801814, 3251012], [14057391, 2748303], [12714628, 1346008], [11801814, 3251012]]]),
+        name: '多边形要素'              // 属性信息
+    });
+    //初始化一个矢量数据
+    let vectorSource = new ol.source.Vector();
+    vectorSource.addFeature(pointFeature);
+    vectorSource.addFeature(lineFeature);
+    vectorSource.addFeature(polygonFeature);
+
+    //初始化一个矢量图层
+    let vectorLayer = new ol.layer.Vector({
+        source:vectorSource
+    })
+
+    let map = new ol.Map({
+        target:'map',
+        layers:[
+            new ol.layer.Tile({
+                source:new ol.source.OSM()
+            }),
+            //vectorLayer
+            //加载一个GeoJson地图
+            new ol.layer.Vector({
+                source:new ol.source.Vector({
+                    url:'./data/line-samples.geojson', //矢量来源
+                    format:new ol.format.GeoJSON() //矢量解析器
+                })
+            })
+        ],
+        view:new ol.View({
+            center:[0,0],
+            zoom:3
+        })
+    });
+
+</script>
+</body>
+</html>

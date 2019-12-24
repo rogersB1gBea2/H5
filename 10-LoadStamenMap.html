@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../v6.1.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height:600px;
+            width: 100%;
+        }
+    </style>
+    <script src="../v6.1.1/build/ol.js"></script>
+    <title>Simple Map exachange</title>
+</head>
+<body>
+<h2>My Map</h2>
+<div id="map" class="map">
+</div>
+<script type="text/javascript">
+    let osmSource = new ol.source.OSM();
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+               /* source: new ol.source.stamen({
+                    layer:'watercolor'
+                })*/
+                source: new ol.source.Stamen({
+                    layer: 'watercolor'         // 指定加载的图层名，可以被替换为'toner'或'terrain'
+                })
+            })
+        ],
+        view: new ol.View({
+            center: [0,0],
+            zoom: 5
+        })
+    });
+
+</script>
+</body>
+</html>

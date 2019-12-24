@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" href="../v6.1.1/css/ol.css" />
+    <script src="../v6.1.1/build/ol.js"></script>
+</head>
+<body>
+    <div id="map"></div>
+<script>
+   /* let map = new ol.Map({
+       target:'map', //关联对应的div
+        layers:[
+            new ol.layer.Tile({ //瓦片图层
+                source:new ol.source.OSM() //OpenstreetMap数据源
+            })
+        ],
+        view: new ol.View({ //地图视图
+            projection:'EPSG:3857',
+            center:[0,0],
+            zoom:0
+        })
+    });*/
+   let map = new ol.Map({
+       target: 'map',                          // 关联到对应的div容器
+       layers: [
+           new ol.layer.Tile({                 // 瓦片图层
+               source: new ol.source.OSM()     // OpenStreetMap数据源
+           })
+       ],
+       view: new ol.View({                     // 地图视图
+           projection: 'EPSG:3857',
+           center: [0, 0],
+           zoom: 0
+       })
+   });
+   /*var map = new ol.Map({
+       target: 'map',
+       layers: [
+           new ol.layer.Tile({
+               source: new ol.source.OSM()
+           })
+       ],
+       view: new ol.View({
+           center: ol.proj.fromLonLat([37.41, 8.82]),
+           zoom: 4
+       })
+   });*/
+   import Map from 'ol/Map';
+   import View from 'ol/View';
+   import OSM from 'ol/source/OSM';
+   import TileLayer from 'ol/layer/Tile';
+
+   new Map({
+       layers: [
+           new TileLayer({source: new OSM()})
+       ],
+       view: new View({
+           center: [0, 0],
+           zoom: 2
+       }),
+       target: 'map'
+   });
+</script>
+</body>
+</html>

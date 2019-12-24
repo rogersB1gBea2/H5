@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../v6.1.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height:600px;
+            width: 100%;
+        }
+    </style>
+    <script src="../v6.1.1/build/ol.js"></script>
+    <title>Simple Map exachange</title>
+</head>
+<body>
+<h2>My Map</h2>
+<div id="map" class="map">
+</div>
+<script type="text/javascript">
+    let map = new ol.Map({
+        target:'map',
+        layers:[
+            new ol.layer.Tile({
+                source:new ol.source.OSM()
+            }),
+            //vectorLayer
+            //加载一个GeoJson地图
+            new ol.layer.Tile({
+                /*source:new ol.source.ImageWMS({
+                url:'http://ahocevar.com/geoserver/wms',//WMS的URL地址
+                    //wms的请求参数
+                    params:{
+                    'LAYERS':'topp:states'//请求的图层名
+                    },
+                    ratio:1,  //表示请求的图像是地图视图的大小
+                    serverType:'geoserver' //服务器类型
+                })*/
+                source:new ol.source.TileWMS({
+                    url:'http://ahocevar.com/geoserver/wms',//WMS的URL地址
+                    //wms的请求参数
+                    params:{
+                        'LAYERS':'topp:states'//请求的图层名
+                    },
+                    ratio:1,  //表示请求的图像是地图视图的大小
+                    serverType:'geoserver', //服务器类型
+                    transition:5000
+                })
+            })
+        ],
+        view:new ol.View({
+            center:[-10997148, 4569099],
+            zoom:4
+        })
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../v6.1.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height:600px;
+            width: 100%;
+        }
+    </style>
+    <script src="../v6.1.1/build/ol.js"></script>
+    <title>Simple Map exachange</title>
+</head>
+<body>
+<h2>My Map</h2>
+<div id="map" class="map">
+    <input type="checkbox" id="osm" checked />OpenStreetMap
+    <input type="checkbox" id="bingmap" />Bing Map
+    <input type="checkbox" id="stamen" />Stamen Map
+</div>
+<script type="text/javascript">
+    let osmSource = new ol.source.OSM();
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            }),
+            //添加一个显示webOSM坐标系的网格
+            new ol.layer.Tile({
+                source: new ol.source.TileDebug({
+                    projection:'EPSG:3857',
+                    tileGrid:osmSource.getTileGrid()
+                })
+            })
+        ],
+        view: new ol.View({
+            center: [0, 0],
+            zoom: 2
+        }),
+        controls:ol.control.defaults().extend([
+
+            new ol.control.ScaleLine({
+                units:"metric"
+            })
+        ])
+    });
+</script>
+</body>
+</html>

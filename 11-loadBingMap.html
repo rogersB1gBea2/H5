@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../v6.1.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height:600px;
+            width: 100%;
+        }
+    </style>
+    <script src="../v6.1.1/build/ol.js"></script>
+    <title>Simple Map exachange</title>
+</head>
+<body>
+<h2>My Map</h2>
+<div id="map" class="map">
+</div>
+<script type="text/javascript">
+    let osmSource = new ol.source.OSM();
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                /* source: new ol.source.stamen({
+                     layer:'watercolor'
+                 })*/
+                source: new ol.source.BingMaps({
+                    // Bing Map的key，可以去官网申请
+                    key: 'AkjzA7OhS4MIBjutL21bkAop7dc41HSE0CNTR5c6HJy8JKc7U9U9RveWJrylD3XJ',
+                    imagerySet: 'AerialWithLabels'  // 指定加载的图层名，还可以替换为'Aerial'或'Road'
+                })
+            })
+        ],
+        view: new ol.View({
+            center: [0,0],
+            zoom: 5
+        })
+    });
+
+</script>
+</body>
+</html>

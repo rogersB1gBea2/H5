@@ -1,0 +1,80 @@
+
+<!doctype html>
+<html xmlns=http://www.w3.org/1999/xhtml>
+<head>
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta content=always name=referrer>
+    <title>点线面圆的绘制</title>
+    <link rel="stylesheet" href="../v6.1.1/css/ol.css" type="text/css">
+    <script src="../v6.1.1/build/ol.js"></script>
+</head>
+
+<body>
+<label>Geometry type &nbsp;</label>
+<select id="type">
+    <option value="Point">Point</option>
+    <option value="LineString">LineString</option>
+    <option value="Polygon">Polygon</option>
+    <option value="Circle">Circle</option>
+    <option value="None">None</option>
+</select>
+
+<div id="map" style="width: 100%"></div>
+<script type="text/javascript">
+    var map = new ol.Map({
+        target: 'map',
+        //底图
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.transform(
+                [0,0], 'EPSG:4326', 'EPSG:3857'),
+            zoom: 2
+        })
+    });
+
+    // 添加一个绘制的线使用的layer
+    var drawLayer = new ol.layer.Vector({
+        //layer所对应的source
+        source: new ol.source.Vector()
+
+    })
+    //把layer加入到地图中
+    map.addLayer(drawLayer);
+
+
+    //更具选中的类型进行变换
+    var typeSelect = document.getElementById('type');
+    var draw; // 在这儿定义一个全局的绘制变量，方便一会去除它
+
+    function addInteraction() {
+        var value = typeSelect.value;
+        if (value !== 'None') {
+            draw = new ol.interaction.Draw({
+                source: drawLayer.getSource(),
+                type: typeSelect.value
+            });
+            map.addInteraction(draw);
+        }
+    }
+
+    /**
+     * 处理选中不同的绘制方式的方法，通过监听typeSelect值的变化
+     */
+    typeSelect.onchange = function() {
+
+        //先移除上一个Interaction
+        map.removeInteraction(draw);
+        //再根据typeSelect的值绘制新的Interaction
+        addInteraction();
+    };
+
+    addInteraction();
+</script>
+</body>
+
+</html>

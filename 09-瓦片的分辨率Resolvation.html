@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../v6.1.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height:600px;
+            width: 100%;
+        }
+    </style>
+    <script src="../v6.1.1/build/ol.js"></script>
+    <title>Simple Map exachange</title>
+</head>
+<body>
+<h2>My Map</h2>
+<div id="map" class="map">
+    <div><span>Level :</span><span id="zoom"></span><span>Resolution:</span><span id="resolution"></span></div>
+</div>
+<script type="text/javascript">
+    let osmSource = new ol.source.OSM();
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            }),
+            //添加一个显示webOSM坐标系的网格
+            new ol.layer.Tile({
+                source: new ol.source.TileDebug({
+                    projection:'EPSG:3857',
+                    tileGrid:osmSource.getTileGrid()
+                })
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.transform([104,30],'EPSG:4326','EPSG:3857'),
+            zoom: 5
+        })
+    });
+    //监听层级变化,输出当前层级以及分辨率
+    map.getView().on('change:resolution',function(){
+        document.getElementById('zoom').innerHTML= this.getZoom()+',';
+        document.getElementById('resolution').innerHTML= this.getResolution();
+    })
+
+    document.getElementById('zoom').innerHTML= map.getView().getZoom()+',';
+    document.getElementById('resolution').innerHTML = + map.getView().getResolution();
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title data-i18n="resources.title_controlerLayerSwitcher"></title>
+</head>
+<body>
+  <div id="map" style="width: 100%;height:100%"></div>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js"></script>
+  <script type="text/javascript" src="http://iclient.supermap.io/dist/openlayers/iclient-openlayers.min.js"></script>
+  <script type="text/javascript">
+      var host = window.isLocal ? window.server : "http://support.supermap.com.cn:8090";
+      var map,
+          China = host + '/iserver/services/map-china400/rest/maps/China',
+          ChinaDark = host + '/iserver/services/map-china400/rest/maps/ChinaDark';
+      map = new ol.Map({
+          target: 'map',
+          layers: [
+              new ol.layer.Group({
+                  'title': ['China','ChinaDark'],
+                  layers: [
+                      new ol.layer.Tile({
+                          title: 'China',
+                          type: 'base',
+                          visible: true,
+                          source: new ol.source.TileSuperMapRest({
+                              url: China
+                          }),
+                      }),
+                      new ol.layer.Tile({
+                          title: 'ChinaDark',
+                          type: 'base',
+                          visible: false,
+                          source: new ol.source.TileSuperMapRest({
+                              url: ChinaDark
+                          }),
+
+                      })
+                  ]
+              }),
+          ],
+          controls: ol.control.defaults({attributionOptions: {collapsed: false}}),
+          view: new ol.View({
+              center: [100, 40],
+              zoom: 2,
+              projection: 'EPSG:4326'
+          })
+      });
+      var layerSwitcher = new ol.control.LayerSwitcher({});
+      map.addControl(layerSwitcher);
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../v6.1.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height:600px;
+            width: 100%;
+        }
+    </style>
+    <script src="../v6.1.1/build/ol.js"></script>
+    <title>Simple Map exachange</title>
+</head>
+<body>
+<h2>My Map</h2>
+<div id="map" class="map"></div>
+<script type="text/javascript">
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ],
+        view: new ol.View({
+            /*center: ol.proj.fromLonLat([37.41, 8.82]),
+            zoom: 4*/
+            center: [0, 0],
+            zoom: 0
+        }),
+        controls:ol.control.defaults().extend([
+            //new ol.control.MousePosition() //坐标获取与实例化OverViewMao对象
+            new ol.control.OverviewMap({//实例化一个OverViewMap的对象，并加入到地图中
+                //Shift键+Alt键 地图可以旋转
+                collapsed:true
+            })
+        ])
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../v6.1.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height:600px;
+            width: 100%;
+        }
+    </style>
+    <script src="../v6.1.1/build/ol.js"></script>
+    <title>Simple Map exachange</title>
+</head>
+<body>
+<h2>My Map</h2>
+<div id="map" class="map">
+</div>
+<script type="text/javascript">
+    let osmSource = new ol.source.OSM();
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                /* source: new ol.source.Stamen({
+                     layer:'watercolor'
+                 })*/
+                source: new ol.source.XYZ({
+                    // 设置本地离线瓦片所在路径，由于例子里面只有一张瓦片，页面显示时就只看得到一张瓦片。
+                    url: './offlineMapTiles/{z}/{x}/{y}.png'//第题路径没有无法显示，但是需要给出路径的URL
+                })
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([104.06667, 30.66667]),
+            zoom: 3
+        })
+    });
+
+</script>
+</body>
+</html>

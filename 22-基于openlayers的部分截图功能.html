@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+</head>
+<body>
+
+<a type="button" id="down_button"><button id="creat">点击复制图片</button></a>
+<div class="imgBox" style="position:relative;">
+    <img src="idcard.jpg">
+    <span>我是内容</span>
+</div>
+<script>
+    $("#creat").click(function(){
+        html2canvas($(".imgBox"),{ // $(".imgBox")是你要复制生成canvas的区域，可以自己选
+            onrendered:function(canvas){
+                dataURL =canvas.toDataURL("image/png");
+                $("body").append(canvas); //直接在页面会把生成的这张图片的显示出来
+                console.log(dataURL);
+                //下载图片（可以把生成的这张图片下载下来）
+$('#down_button').attr( 'href' ,  dataURL ) ;
+                $('#down_button').attr( 'download' , 'myjobdeer.png' ) ;
+                sessionStorage.setItem("positive",dataURL);
+                setTimeout(function(){
+                    /*做一些处理*/
+                },3000)
+            },
+            width:678,
+            height:404
+        })
+    })
+
+</script>
+</body>
+</html>
